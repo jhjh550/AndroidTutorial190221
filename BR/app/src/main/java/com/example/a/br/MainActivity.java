@@ -8,6 +8,8 @@ import android.os.BatteryManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
                 Toast.makeText(context, "level : "+level, Toast.LENGTH_SHORT).show();
                 Log.d("Battery", "level : "+level);
+            }else if (action.equals(Intent.ACTION_BATTERY_LOW)){
+
+            }else if(action.equals("abcdefg")){
+
             }
         }
     };
@@ -28,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button btnSend = findViewById(R.id.btnSend);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("abcdefg");
+                sendBroadcast(intent);
+            }
+        });
     }
 
     @Override
@@ -35,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        intentFilter.addAction(Intent.ACTION_BATTERY_LOW);
+        intentFilter.addAction("abcdefg");
         registerReceiver(receiver, intentFilter);
     }
 
