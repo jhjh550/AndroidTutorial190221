@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
                 convertView = getLayoutInflater().inflate(R.layout.item_view, null);
             }
 
+            TextView textViewTitle = convertView.findViewById(R.id.textViewTitle);
+            TextView textViewDesc = convertView.findViewById(R.id.textviewDesc);
+            ImageView itemIcon = convertView.findViewById(R.id.itemIcon);
+
+            MyData myData = myList.get(position);
+            textViewTitle.setText(myData.title);
+            textViewDesc.setText(myData.desc);
+            itemIcon.setImageResource(myData.itemIcon);
+
             return convertView;
         }
     }
@@ -59,5 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initData();
         ListView myListView = findViewById(R.id.myListView);
+        MyAdapter adapter = new MyAdapter();
+        myListView.setAdapter(adapter);
     }
 }
