@@ -1,13 +1,62 @@
 package com.example.a.fragment;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+                        implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        findViewById(R.id.btnAdd).setOnClickListener(this);
+        findViewById(R.id.btnRemove).setOnClickListener(this);
+        findViewById(R.id.btnHide).setOnClickListener(this);
+        findViewById(R.id.btnReplace).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentById(R.id.frame);
+
+        switch (v.getId()){
+            case R.id.btnAdd:
+                if(fragment == null){
+                    fragment = new BlankFragment();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.add(R.id.frame, fragment, "counter");
+                    transaction.commit();
+                }
+                break;
+            case R.id.btnRemove:
+                if(fragment != null){
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.remove(fragment).commit();
+                }
+                break;
+            case R.id.btnHide:
+                if(fragment != null){
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    if(fragment.isHidden()){
+                        transaction.show(fragment);
+                    }else{
+                        transaction.hide(fragment);
+                    }
+                }
+                break;
+            case R.id.btnReplace:
+                if(fragment != null){
+
+                }
+                break;
+        }
+
     }
 }
