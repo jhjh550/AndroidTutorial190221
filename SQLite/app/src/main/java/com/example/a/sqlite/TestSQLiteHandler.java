@@ -2,7 +2,9 @@ package com.example.a.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class TestSQLiteHandler {
     TestSQLiteOpenHelper helper;
@@ -33,5 +35,18 @@ public class TestSQLiteHandler {
         values.put("age", newAge);
         db.update("student", values, "name = ?",
                 new String[]{name});
+    }
+
+    public void selectAll(){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor cursor = db.query("student", null, null, null, null, null, null);
+        while(cursor.moveToNext()){
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            int age = cursor.getInt(cursor.getColumnIndex("age"));
+            String address = cursor.getString(cursor.getColumnIndex("address"));
+
+            Log.d("student", name + age + address);
+        }
     }
 }

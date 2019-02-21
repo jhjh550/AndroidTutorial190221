@@ -12,5 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
         TestSQLiteHandler handler = new TestSQLiteHandler(this);
         handler.insert("kim", 10, "seoul");
+        handler.insert("가나다", 11, "부산");
+        handler.update("kim", 12);
     }
 }
