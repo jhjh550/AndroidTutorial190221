@@ -14,5 +14,6 @@ public class MainActivity extends AppCompatActivity {
         handler.insert("kim", 10, "seoul");
         handler.insert("가나다", 11, "부산");
         handler.update("kim", 12);
+        handler.selectAll();
     }
 }
