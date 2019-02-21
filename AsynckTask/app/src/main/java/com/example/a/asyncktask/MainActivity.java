@@ -12,6 +12,12 @@ public class MainActivity extends AppCompatActivity {
     class MyTask extends AsyncTask<Integer, Float, String>{
 
         @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            textView.setText(s);
+        }
+
+        @Override
         protected void onProgressUpdate(Float... values) {
             super.onProgressUpdate(values);
             textView.setText("count : "+values[0]);
@@ -29,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("count", "count:"+i);
                 publishProgress((float)i);
             }
-            return null;
+            return "done";
         }
     }
     @Override
