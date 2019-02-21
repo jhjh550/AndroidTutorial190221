@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             myData.desc = "desc "+i;
             myData.itemIcon = i%2 == 0 ? R.mipmap.ic_launcher
                     : R.mipmap.ic_launcher_round;
+            myList.add(myData);
         }
     }
 
