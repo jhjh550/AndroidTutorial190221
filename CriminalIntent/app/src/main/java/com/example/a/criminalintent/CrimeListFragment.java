@@ -29,6 +29,8 @@ public class CrimeListFragment extends Fragment {
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private boolean mSubTitleVisible;
+    private static final String SAVED_SUBTITLE_VISIBLE = "SAVED_SUBTITLE_VISIBLE";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +46,10 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = v.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getActivity()) );
+        if(savedInstanceState != null){
+            mSubTitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
+        }
+
         updateUI();
         return v;
     }
@@ -52,6 +58,12 @@ public class CrimeListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubTitleVisible);
     }
 
     private void updateUI(){
@@ -63,7 +75,7 @@ public class CrimeListFragment extends Fragment {
         }else{
             mAdapter.notifyDataSetChanged();
         }
-
+        updateSubTitle();
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -126,6 +138,12 @@ public class CrimeListFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         inflater.inflate(R.menu.fragment_crime_list, menu);
+        MenuItem item = menu.findItem(R.id.menu_item_show_subtitle);
+        if(mSubTitleVisible){
+            item.setTitle("서브타이틀 숨기기");
+        }else {
+            item.setTitle("서브타이틀 보이기");
+        }
     }
 
     @Override
@@ -139,6 +157,8 @@ public class CrimeListFragment extends Fragment {
                 startActivity(intent);
                 return true;
             case R.id.menu_item_show_subtitle:
+                mSubTitleVisible = !mSubTitleVisible;
+                getActivity().invalidateOptionsMenu();
                 updateSubTitle();
                 return true;
         }
@@ -148,6 +168,9 @@ public class CrimeListFragment extends Fragment {
     private void updateSubTitle(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         String subTitile = "범죄 "+crimeLab.getCrimes().size()+"건";
+        if(!mSubTitleVisible)
+            subTitile = null;
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(subTitile);
     }
 }
