@@ -1,6 +1,7 @@
 package com.example.a.criminalintent;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment {
     DatePicker mDatePicker;
+    public static final String EXTRA_DATE = "EXTRA_DATE";
     private static final String ARG_DATE = "ARG_DATE";
     public static DatePickerFragment newInstance(Date date) {
 
@@ -45,5 +47,15 @@ public class DatePickerFragment extends DialogFragment {
                 .setView(v)
                 .setPositiveButton("OK", null)
                 .create();
+    }
+
+    private void sendResult(int resultCode, Date date){
+        if(getTargetFragment() == null)
+            return;
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DATE, date);
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(), resultCode, intent);
     }
 }
