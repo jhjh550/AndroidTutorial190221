@@ -9,7 +9,12 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
 
-
+    public Crime(String uuidString, String title, long date, int isSolved){
+        mId = UUID.fromString(uuidString);
+        mTitle = title;
+        mDate = new Date(date);
+        mSolved = isSolved != 0 ;
+    }
 
     public Crime(){
         mId = UUID.randomUUID();
