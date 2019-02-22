@@ -1,6 +1,8 @@
 package com.example.a.criminalintent;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +20,10 @@ import android.widget.EditText;
 import com.example.a.criminalintent.model.Crime;
 import com.example.a.criminalintent.model.CrimeLab;
 
+import java.util.Date;
 import java.util.UUID;
+
+import static com.example.a.criminalintent.DatePickerFragment.EXTRA_DATE;
 
 
 public class CrimeFragment extends Fragment {
@@ -93,4 +98,12 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_DATE && requestCode == Activity.RESULT_OK){
+            Date date = (Date) data.getSerializableExtra(EXTRA_DATE);
+            mDateButton.setText(date.toString());
+            mCrime.setDate(date);
+        }
+    }
 }
