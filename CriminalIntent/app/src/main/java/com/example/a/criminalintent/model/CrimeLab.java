@@ -2,14 +2,20 @@ package com.example.a.criminalintent.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.a.criminalintent.database.CrimeBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PropertyResourceBundle;
 import java.util.UUID;
 
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
     private List<Crime> mCrimes;
+    private SQLiteDatabase mDatabase;
+    private Context mContext;
 
     public List<Crime> getCrimes() {
         return mCrimes;
@@ -36,6 +42,8 @@ public class CrimeLab {
 
     private CrimeLab(Context context){
         mCrimes = new ArrayList<>();
+        mContext = context;
+        mDatabase = new CrimeBaseHelper(context).getWritableDatabase();
     }
 
 }
