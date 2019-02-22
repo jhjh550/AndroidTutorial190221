@@ -100,7 +100,7 @@ public class CrimeFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_DATE && requestCode == Activity.RESULT_OK){
+        if(requestCode == REQUEST_DATE && resultCode == Activity.RESULT_OK){
             Date date = (Date) data.getSerializableExtra(EXTRA_DATE);
             mDateButton.setText(date.toString());
             mCrime.setDate(date);
