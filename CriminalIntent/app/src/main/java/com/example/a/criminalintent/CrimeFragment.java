@@ -42,6 +42,7 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
     private Button mSuspectButton;
+    private Button mReportButton;
 
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_CONTACT = 1;
@@ -128,7 +129,28 @@ public class CrimeFragment extends Fragment {
                 PackageManager.MATCH_DEFAULT_ONLY) == null){
             mSuspectButton.setEnabled(false);
         }
+
+        mReportButton = v.findViewById(R.id.crime_report_text);
+        mReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, getReport());
+                intent.putExtra(Intent.EXTRA_SUBJECT, "범죄 보고서");
+                startActivity(intent);
+            }
+        });
         return v;
+    }
+
+    public String getReport(){
+        String solvedString = mCrime.isSolved() ? "해결됨" : "미해결";
+        String suspect = mCrime.getSuspect();
+        if(suspect == null)
+            suspect = "용의자 없음";
+
+        return solvedString+" "+mCrime.getDate().toString()+" "+suspect;
     }
 
     @Override
