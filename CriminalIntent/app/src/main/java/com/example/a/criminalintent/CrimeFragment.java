@@ -138,6 +138,7 @@ public class CrimeFragment extends Fragment {
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, getReport());
                 intent.putExtra(Intent.EXTRA_SUBJECT, "범죄 보고서");
+                intent = intent.createChooser(intent, "보고서 보낼 앱 선택");
                 startActivity(intent);
             }
         });
