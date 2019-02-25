@@ -13,10 +13,19 @@ import android.view.ViewGroup;
 
 import com.example.a.beatbox_mvvm.databinding.FragmentBeatBoxBinding;
 import com.example.a.beatbox_mvvm.databinding.ListItemSoundBinding;
+import com.example.a.beatbox_mvvm.model.BeatBox;
 
 public class BeatBoxFragment extends Fragment {
+    private BeatBox mBeatBox;
+
     public static BeatBoxFragment newInstance() {
         return new BeatBoxFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBeatBox = new BeatBox(getActivity());
     }
 
     @Nullable
@@ -26,6 +35,7 @@ public class BeatBoxFragment extends Fragment {
                 inflater, R.layout.fragment_beat_box, container, false);
         binding.recyclerView.setLayoutManager(
                 new GridLayoutManager(getActivity(), 3) );
+        binding.recyclerView.setAdapter(new SoundAdapter());
         return binding.getRoot();
     }
 
@@ -35,6 +45,28 @@ public class BeatBoxFragment extends Fragment {
         public SoundHolder(ListItemSoundBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+        }
+    }
+    private class SoundAdapter extends RecyclerView.Adapter{
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            ListItemSoundBinding binding = DataBindingUtil.inflate(
+                    LayoutInflater.from(getActivity()),
+                    R.layout.list_item_sound,
+                    viewGroup, false);
+            return new SoundHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
         }
     }
 }
