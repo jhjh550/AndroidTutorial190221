@@ -18,4 +18,8 @@ public class Sound {
     public void setName(String name) {
         mName = name;
     }
+
+    public String getName() {
+        return mName;
+    }
 }
