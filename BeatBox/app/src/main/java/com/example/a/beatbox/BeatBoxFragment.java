@@ -11,9 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.a.beatbox.model.BeatBox;
+
 public class BeatBoxFragment extends Fragment {
+    private BeatBox mBeatBox;
+
     public static BeatBoxFragment newInstance() {
         return new BeatBoxFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBeatBox = new BeatBox(getActivity());
     }
 
     @Nullable
