@@ -23,6 +23,7 @@ public class BeatBoxFragment extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.fragment_beat_box_recycler_view);
         recyclerView.setLayoutManager(
                 new GridLayoutManager(getActivity(), 3));
+        recyclerView.setAdapter(new SoundAdapter());
         return v;
     }
 
@@ -40,7 +41,9 @@ public class BeatBoxFragment extends Fragment {
         @NonNull
         @Override
         public SoundHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            return new SoundHolder();
+            View v = LayoutInflater.from(getActivity())
+                    .inflate(R.layout.list_item_sound, viewGroup, false);
+            return new SoundHolder(v);
         }
 
         @Override
