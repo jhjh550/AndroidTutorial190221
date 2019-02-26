@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,7 +52,24 @@ public class NerdLauncherFragment extends Fragment {
                 );
             }
         });
-        Log.d(TAG, "activities : "+activities.size());
     }
+
+    private class ActivityHolder extends RecyclerView.ViewHolder{
+        private ResolveInfo mResolveInfo;
+        private TextView mNameTextView;
+
+        public ActivityHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        public void bindActivity(ResolveInfo resolveInfo){
+            mResolveInfo = resolveInfo;
+            PackageManager pm = getActivity().getPackageManager();
+            String appName = mResolveInfo.loadLabel(pm).toString();
+            mNameTextView.setText(appName);
+        }
+    }
+
+
 
 }
