@@ -50,7 +50,7 @@ public class FlickrFetchr {
         return new String(getUrlBytes(urlSpec));
     }
 
-    public void fetchItems(){
+    public List<GalleryItem> fetchItems(){
         String url = Uri.parse("https://api.flickr.com/services/rest/")
                 .buildUpon()
                 .appendQueryParameter("method", "flickr.photos.getRecent")
@@ -66,6 +66,7 @@ public class FlickrFetchr {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return items;
     }
 
     public void parseItems(List<GalleryItem> list, JSONObject jsonBody)
