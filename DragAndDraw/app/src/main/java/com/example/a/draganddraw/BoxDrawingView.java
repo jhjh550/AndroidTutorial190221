@@ -41,6 +41,6 @@ public class BoxDrawingView extends View {
         }
 
         Log.d(TAG, action+" at x = "+current.x+", y = "+current.y);
-        return super.onTouchEvent(event);
+        return true;
     }
 }
