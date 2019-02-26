@@ -21,6 +21,12 @@ public class PhotoGalleryFragment extends Fragment {
         return new PhotoGalleryFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new FetchItemsTask().execute();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,8 +41,7 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                String result = new FlickrFetchr().getUrlString("https://www.google.com");
-                Log.d(TAG, "Fetched : "+result);
+                new FlickrFetchr().fetchItems();
             } catch (Exception e) {
                 e.printStackTrace();
             }
