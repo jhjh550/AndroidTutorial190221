@@ -81,6 +81,7 @@ public class NerdLauncherFragment extends Fragment {
             intent.setClassName(
                     activityInfo.applicationInfo.packageName,
                     activityInfo.name);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }
