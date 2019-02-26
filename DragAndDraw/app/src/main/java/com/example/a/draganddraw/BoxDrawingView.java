@@ -8,10 +8,16 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PropertyResourceBundle;
 
 public class BoxDrawingView extends View {
     private final static String TAG = "BoxDrawingView";
+
+    private Box mCurentBox;
+    private List<Box> mBoxes = new ArrayList<>();
+
     public BoxDrawingView(Context context) {
         super(context);
     }
@@ -23,24 +29,28 @@ public class BoxDrawingView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         PointF current = new PointF(event.getX(), event.getY());
-        String action = "";
+
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                action = "ACTION_DOWN";
+                mCurentBox = new Box(current);
+                mBoxes.add(mCurentBox);
                 break;
             case MotionEvent.ACTION_UP:
-                action = "ACTION_UP";
+                mCurentBox = null;
                 break;
             case MotionEvent.ACTION_MOVE:
-                action = "ACTION_MOVE";
+                if(mCurentBox != null){
+                    mCurentBox.setCurrent(current);
+                    invalidate();
+                }
                 break;
             case MotionEvent.ACTION_CANCEL:
-                action = "ACTION_CANCEL";
+
                 break;
         }
 
-        Log.d(TAG, action+" at x = "+current.x+", y = "+current.y);
+
         return true;
     }
 }
